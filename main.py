@@ -1,7 +1,7 @@
 from utils.core import create_sessions
 from utils.telegram import Accounts
 from utils.blum import Blum
-from data.config import hello,USE_PROXY
+from data.config import hello,USE_PROXY,USE_TG_BOT,BOT_TOKEN
 import asyncio
 import os
 

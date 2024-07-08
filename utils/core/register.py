@@ -2,6 +2,7 @@ from loguru import logger
 from data import config
 import pyrogram
 from data.config import USE_PROXY
+import random
 
 async def create_sessions():
     while True:
@@ -15,6 +16,7 @@ async def create_sessions():
                 proxy_list = [i.strip().split() for i in file.readlines() if len(i.strip().split()) == 2]
                 for prox,name in proxy_list:
                     proxy_dict[name] = prox
+            
             if session_name in proxy_dict:
                 proxy = proxy_dict[session_name]
                 proxy_client = {
@@ -24,6 +26,7 @@ async def create_sessions():
                     "username": proxy.split(':')[2],
                     "password": proxy.split(':')[3],
                 }
+                
                 session = pyrogram.Client(
                     api_id=config.API_ID,
                     api_hash=config.API_HASH,
@@ -37,11 +40,12 @@ async def create_sessions():
 
                 logger.success(f'Добавлена сессия +{user_data.phone_number} @{user_data.username} PROXY {proxy.split(":")[0]}')
             else:
+                
                 session = pyrogram.Client(
                     api_id=config.API_ID,
                     api_hash=config.API_HASH,
                     name=session_name,
-                    workdir=config.WORKDIR,
+                    workdir=config.WORKDIR
                 )
 
                 async with session:
@@ -49,11 +53,12 @@ async def create_sessions():
 
                 logger.success(f'Добавлена сессия +{user_data.phone_number} @{user_data.username} PROXY : NONE')
         else:
+            
             session = pyrogram.Client(
                 api_id=config.API_ID,
                 api_hash=config.API_HASH,
                 name=session_name,
-                workdir=config.WORKDIR,
+                workdir=config.WORKDIR
             )
 
             async with session:
